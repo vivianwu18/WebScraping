@@ -11,7 +11,7 @@ page1 = requests.get(url1, headers = headers)
 cookies = page1.cookies.get_dict()
 print(cookies)
 
-### read and store the hidden field
+# read and store the hidden field
 
 soup = BeautifulSoup(page1.content, 'html.parser')
 loginform = soup.find('div', class_ = 'planespotters-form')
@@ -24,7 +24,7 @@ print(payload)
 
 ### 2. Make a post request using the cookies from (1) as well as all required name-value-pairs (including your username and passwords).
 
-payload.update({'username':'mengweiwu', 'password':'12345678'})
+payload.update({'username':'username', 'password':'password'})
 print(payload)
 
 session = requests.Session()
@@ -40,7 +40,7 @@ else:
 
 print(session.cookies.get_dict())
 
-### update cookies
+# update cookies
 cookies.update(session.cookies.get_dict())
 print(cookies)
 
@@ -57,15 +57,15 @@ page2 = session.get(url2, cookies = cookies, headers = headers)
 ###     B. All (combined) cookies from (3).
 ###     C. A boolean value to show your username is contained in the document in part (5)(a).
 
-### print entire profile page
+# print entire profile page
 soup2 = BeautifulSoup(page2.content, 'html.parser')
 print(soup2.prettify())
 
-### print all cookies
+# print all cookies
 print(cookies)
 
-### check whether the username is contained in the document
-if 'mengweiwu' in soup2.text:
+# check whether the username is contained in the document
+if 'username' in soup2.text:
     print('Username appears on the page.')
 else:
     print('Username does not appear on the page.')
