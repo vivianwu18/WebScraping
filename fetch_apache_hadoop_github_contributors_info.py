@@ -11,7 +11,7 @@ import time
 ### 1. Go to https://api.github.com Links to an external site.and familiarize yourself with the API.
 
 ### 2. Go to https://api.github.com/repos/apache/hadoop/contributors Links to an external site.. This is the Apache Hadoop Github Repo's contributors’ endpoint. Extract the JSON corresponding to the first 100 contributors from this API. (Hint: the API request is a GET request and the variable name that handles the items per page is "per_page").  Write Java or Python code that does all this.
-### fetch html and convert to json
+# fetch html and convert to json
 
 username = 'vivianwu18'
 token = 'personal_github_token'
@@ -21,11 +21,11 @@ page = requests.get(url, auth = (username, token))
 doc = BeautifulSoup(page.content, 'html.parser')
 json_dict = json.loads(str(doc))
 
-### check how many contributors we fetch
+# check how many contributors we fetch
 
 len(json_dict)
 
-### get users' url to access to the user information
+# get users' url to access to the user information
 
 url_list = list()
 for i in range(len(json_dict)):
@@ -33,7 +33,7 @@ for i in range(len(json_dict)):
 
 
 ### 3. For each of the 100 contributors extracted in (2), write code that accesses their user information and extracts "login", "id", "location", "email", "hireable", "bio", "twitter_username", "public_repos", "public_gists", "followers", "following", "created_at" (and print those to screen)
-### extract the information we need from 100 contributers
+# extract the information we need from 100 contributers
     
 all_user = []
 key_list = ["login", "id", "location", "email", "hireable", "bio", "twitter_username", "public_repos", "public_gists", 
@@ -50,7 +50,8 @@ for i in range(len(url_list)):
     
 pprint.pprint(all_user)
 
-#### 4. Wrte code that creates an SQL database + table, and stores all the information obtained in (3) in it.  Please be cautious of the data type you choose for each column and briefly justify your decisions.  What do you choose as Primary Key and why?
+
+### 4. Wrte code that creates an SQL database + table, and stores all the information obtained in (3) in it.  Please be cautious of the data type you choose for each column and briefly justify your decisions.  What do you choose as Primary Key and why?
 
 def create_sql_table(SQL_TABLE, SQL_TABLE_DEF):
     try:
@@ -75,7 +76,7 @@ def create_sql_table(SQL_TABLE, SQL_TABLE_DEF):
     except IOError as e:
         print(e)
 
-### create SQL database
+# create SQL database
         
 SQL_DB = "assignment5"
 SQL_TABLE_USER = "user"
@@ -97,7 +98,7 @@ SQL_TABLE_USER_DEF = "(" +
 
 create_sql_table(SQL_TABLE_USER, SQL_TABLE_USER_DEF)
 
-### connect to server
+# connect to server
 
 try:
     conn = mysql.connector.connect(host = 'localhost',
@@ -130,8 +131,9 @@ try:
 except IOError as e:
     print(e)
 
+
 ### 5. Optimize your code in (4) to allow for quick look-ups of "login", "location", and "hireable". 
-### create new table with index
+# create new table with index
 
 SQL_DB = "assignment5"
 SQL_TABLE_USER = "user_index"
@@ -154,7 +156,7 @@ SQL_TABLE_USER_DEF = "(" +
 
 create_sql_table(SQL_TABLE_USER, SQL_TABLE_USER_DEF)
 
-### connect to server
+# connect to server
 
 try:
     conn = mysql.connector.connect(host = 'localhost',
@@ -187,8 +189,10 @@ try:
 except IOError as e:
     print(e)
 
-### compare the difference
-### fetch data without index
+
+### 6. Compare the difference
+# fetch data without index
+    
 conn = mysql.connector.connect(host = 'localhost',
                                user = 'root',
                                password = 'f5cef6a0ef9219df9f6fa3869466a1a7',
@@ -206,7 +210,7 @@ end_time1 = time.time()
 
 print(f'The time of fatching the specific columns without indexing: {end_time1 - start_time1}')
 
-### fetch data with index
+# fetch data with index
 conn = mysql.connector.connect(host = 'localhost',
                                user = 'root',
                                password = 'f5cef6a0ef9219df9f6fa3869466a1a7',
@@ -224,5 +228,5 @@ end_time2 = time.time()
 
 print(f'The time of fatching the specific columns with indexing: {end_time2 - start_time2}')
 
-### time difference
+# time difference
 print(f'The difference between the time of these two methods is {(end_time1 - start_time1) - (end_time2 - start_time2)}')
