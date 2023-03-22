@@ -1,4 +1,4 @@
-# WebScraping
+# Web Scraping
 Web scraping using different packages based on the scenarios from the basic to the advanced concepts.
 
 ## 1. Regular Expression
